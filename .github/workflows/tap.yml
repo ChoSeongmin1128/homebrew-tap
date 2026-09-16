@@ -1,0 +1,26 @@
+name: Tap
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: macos-15
+    timeout-minutes: 15
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_ANALYTICS: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Tap checkout
+        run: brew tap choseongmin1128/tap "$GITHUB_WORKSPACE"
+      - name: Validator tests
+        run: Scripts/tests/validate-tap-tests.sh
+      - name: Validate packages
+        run: Scripts/validate-tap.sh
