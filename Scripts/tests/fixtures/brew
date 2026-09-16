@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+printf '<%s>\n' "$*" >>"${TAP_TEST_TRACE:?}"
+if [[ "${1:-}" == "--repository" ]]
+then
+  printf '%s\n' "${TAP_TEST_ROOT:?}"
+elif [[ "${1:-}" == "livecheck" ]]
+then
+  package="${!#}"
+  token="${package##*/}"
+  kind="formula"
+  [[ " $* " == *" --cask "* ]] && kind="cask"
+  printf '[{"%s":"%s","version":{"current":"1.0.0","latest":"1.0.0","outdated":false,"newer_than_upstream":false}}]\n' \
+    "${kind}" "${token}"
+fi

@@ -20,6 +20,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Tap checkout
         run: brew tap choseongmin1128/tap "$GITHUB_WORKSPACE"
+      - name: Trust validation tap
+        run: brew trust --tap choseongmin1128/tap
       - name: Validator tests
         run: Scripts/tests/validate-tap-tests.sh
       - name: Validate packages
