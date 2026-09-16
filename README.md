@@ -21,3 +21,5 @@ Staging builds are not distributed through this tap.
 - `Scripts/validate-tap.sh`: automatic discovery, syntax, style, audit, livecheck, and fetch validation for every package
 
 Each package keeps its release automation in its upstream repository. An updater may change only its own Cask or Formula file; it must preserve every unrelated package and tap policy file. Package tokens must be unique across `Casks` and `Formula`.
+
+The CI runner temporarily trusts the whole tap only to run Homebrew's repository-wide syntax checks. User installation stays package-scoped through the fully qualified name above.
