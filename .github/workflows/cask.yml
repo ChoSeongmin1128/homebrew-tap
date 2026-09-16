@@ -1,0 +1,38 @@
+name: Cask
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: macos-15
+    timeout-minutes: 15
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_ANALYTICS: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Tap checkout
+        run: brew tap choseongmin1128/tap "$GITHUB_WORKSPACE"
+      - name: Style
+        run: brew style --cask choseongmin1128/tap/claude-usage
+      - name: Audit
+        run: brew audit --cask --strict --online choseongmin1128/tap/claude-usage
+      - name: Livecheck
+        run: |
+          result="$(brew livecheck --cask --json choseongmin1128/tap/claude-usage)"
+          jq -e '
+            length == 1
+            and .[0].cask == "claude-usage"
+            and .[0].version.current == .[0].version.latest
+            and .[0].version.outdated == false
+            and .[0].version.newer_than_upstream == false
+          ' <<< "$result"
+      - name: Fetch
+        run: brew fetch --cask choseongmin1128/tap/claude-usage
