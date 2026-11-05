@@ -1,6 +1,6 @@
 cask "claude-usage" do
-  version "2.10.8"
-  sha256 "fbbed9b03afffea38f0321fa3864482f0e250080a0af256a7b46a7e949d4b1eb"
+  version "2.10.9"
+  sha256 "75dd9c727cd9809bd4d3bb7dce16290a52379e9a44cd466dc2758d6a1b1429ca"
 
   url "https://github.com/ChoSeongmin1128/claude-usage/releases/download/v#{version}/ClaudeUsage.dmg"
   name "ClaudeUsage"
